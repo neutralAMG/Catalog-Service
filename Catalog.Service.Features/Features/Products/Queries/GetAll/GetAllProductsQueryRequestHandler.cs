@@ -1,6 +1,4 @@
-﻿
-
-using Catalog.Service.Domain.Entities;
+﻿using Catalog.Service.Domain.Entities;
 using Catalog.Service.Domain.Repository;
 using Catalog.Service.Features.Core;
 using MediatR;
@@ -25,7 +23,7 @@ namespace Catalog.Service.Features.Features.Products.Queries.GetAll
         }
         public async Task<Result<List<GetAllProductsQueryResponce>>> Handle(GetAllProductsQueryRequest request, CancellationToken cancellationToken)
         {
-            Result result = _validator.Validate(request);
+            Result result = _validator.ValidateInput(request);
 
             if (result.IsFailure)
             {

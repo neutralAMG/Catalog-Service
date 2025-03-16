@@ -12,7 +12,8 @@ namespace Catalog.Service.Features.Extensions
         public static IServiceCollection AddCrossCutting(this IServiceCollection services)
         {
             #region validators
-            services.AddScoped<IInputValidator<GetAllProductsQueryRequest>, GetAllProductsQueryValidator>();
+            services.AddSingleton<IInputValidator<GetAllProductsQueryRequest>, GetAllProductsQueryValidator>();
+            services.AddSingleton<IInputValidator<GetAllProductsQueryRequest>, GetAllProductsQueryValidator>();
 
             #endregion
 
