@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Core\" />
-    <Folder Include="Extensions\" />
     <Folder Include="Features\Products\Commands\" />
-    <Folder Include="Features\Products\" />
-    <Folder Include="Features\Products\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
