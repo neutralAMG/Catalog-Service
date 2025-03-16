@@ -7,15 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Catalog\Catalog.Service.Api.csproj" />
+    <ProjectReference Include="..\Catalog.Services.Domain\Catalog.Service.Domain.csproj" />
   </ItemGroup>
 
 </Project>

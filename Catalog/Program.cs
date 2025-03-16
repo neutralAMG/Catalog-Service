@@ -1,4 +1,6 @@
 using Catalog.Service.Infraestructure.Extensions;
+using Catalog.Service.CrossCuttingConcerns.Extensions;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.AddInfrastructurLayer(builder.Configuration);
+builder.Services.AddCrossCutting(builder.Host);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
