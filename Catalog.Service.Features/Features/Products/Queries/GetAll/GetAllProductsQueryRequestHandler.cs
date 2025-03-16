@@ -8,24 +8,40 @@ using Microsoft.Extensions.Logging;
 
 namespace Catalog.Service.Features.Features.Products.Queries.GetAll
 {
-    public class GetAllProductsQueryRequestHandler : IRequestHandler<GetAllProductsQueryRequest, Result<GetAllProductsQueryResponce>>
+    public class GetAllProductsQueryRequestHandler : IRequestHandler<GetAllProductsQueryRequest, Result<List<GetAllProductsQueryResponce>>>
     {
         private readonly IRepository<Product, int> _productRepository;
         private readonly IInputValidator<GetAllProductsQueryRequest> _validator;
-        private readonly ILogger<GetAllProductsQueryResponce> _logger;
+        private readonly ILogger<GetAllProductsQueryRequest> _logger;
 
         public GetAllProductsQueryRequestHandler(
             IRepository<Product, int> productRepository, 
             IInputValidator<GetAllProductsQueryRequest> validator, 
-            ILogger<GetAllProductsQueryResponce> logger)
+            ILogger<GetAllProductsQueryRequest> logger)
         {
             _productRepository = productRepository;
             _validator = validator;
             _logger = logger;
         }
-        public Task<Result<GetAllProductsQueryResponce>> Handle(GetAllProductsQueryRequest request, CancellationToken cancellationToken)
+        public async Task<Result<List<GetAllProductsQueryResponce>>> Handle(GetAllProductsQueryRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Result result = _validator.Validate(request);
+
+            if (result.IsFailure)
+            {
+                _logger.LogWarning("Validation failed for request {@request}", request);
+                return result;
+            }
+
+            List<Product>? products = await _productRepository.GetAllAsync();
+
+            if(products is null)
+            {
+                _logger.LogWarning("No products found");
+                Result<List<GetAllProductsQueryResponce>>.Failure("No products found");
+            }
+
+            return Result<List<GetAllProductsQueryResponce>>.Success("", products.Select(p => (GetAllProductsQueryResponce)p).ToList());
         }
     }
 }
