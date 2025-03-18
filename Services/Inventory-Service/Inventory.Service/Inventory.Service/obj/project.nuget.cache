@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "x6MkHQcs+B8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Admin\\source\\repos\\Catalog\\Services\\Inventory-Service\\Inventory.Service\\Inventory.Service\\Inventory.Service.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.1\\microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
