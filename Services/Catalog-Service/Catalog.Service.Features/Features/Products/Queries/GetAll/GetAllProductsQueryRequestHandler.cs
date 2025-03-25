@@ -31,9 +31,9 @@ namespace Catalog.Service.Features.Features.Products.Queries.GetAll
                 return result;
             }
 
-            List<Product>? products = await _productRepository.GetAllAsync();
+            List<Product>? products = await _productRepository.GetAllAsync(null, cancellationToken);
 
-            if(products is null)
+            if(products == null)
             {
                 _logger.LogWarning("No products found");
                 Result<List<GetAllProductsQueryResponce>>.Failure("No products found");

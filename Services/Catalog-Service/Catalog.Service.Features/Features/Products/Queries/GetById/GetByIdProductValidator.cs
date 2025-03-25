@@ -8,11 +8,11 @@ namespace Catalog.Service.Features.Features.Products.Queries.GetById
 {
     public class GetByIdProductValidator :AbstractValidator<GetByIdProductRequest>, IInputValidator<GetByIdProductRequest>
     {
-        private readonly FluentValidationToResult _validationAdapter;
 
-        public GetByIdProductValidator(FluentValidationToResult validationAdapter)
+
+        public GetByIdProductValidator()
         {
-           _validationAdapter = validationAdapter;
+
 
             RuleFor(r => r)
                 .NotNull().WithMessage("The input cant be null");
@@ -26,7 +26,7 @@ namespace Catalog.Service.Features.Features.Products.Queries.GetById
         public Result ValidateInput(GetByIdProductRequest input)
         {
             FluentValidation.Results.ValidationResult result = base.Validate(input);
-            return _validationAdapter.AdaptValidationReult(result);
+            return FluentValidationToResult.AdaptValidationResult(result);
         }
     }
 }
