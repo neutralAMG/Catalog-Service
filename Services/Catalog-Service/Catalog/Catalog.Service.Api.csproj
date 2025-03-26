@@ -20,12 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="Endpoints\" />
+    <ProjectReference Include="..\Catalog.Service.Features\Catalog.Service.Features.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Catalog.Service.Features\Catalog.Service.Features.csproj" />
+    <Folder Include="logs\" />
   </ItemGroup>
 
 </Project>

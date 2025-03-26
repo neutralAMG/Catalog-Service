@@ -1,5 +1,9 @@
+using Catalog.Service.Api.Endpoints;
+using Catalog.Service.Api.Extensions;
 using Catalog.Service.Infraestructure.Extensions;
 using Catalog.Service.CrossCuttingConcerns.Extensions;
+using Catalog.Service.Features.Extensions;
+using Microsoft.AspNetCore.RateLimiting;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +14,17 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddInfrastructurLayer(builder.Configuration);
 builder.Services.AddCrossCutting(builder.Host);
-
+builder.Services.AddApplicationLayer();
+builder.Services.AddHealthChecks();
+builder.Services.AddRateLimiter(op =>
+{
+    op.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    op.AddFixedWindowLimiter("fixed", options =>
+    {
+        options.Window = TimeSpan.FromSeconds(5);
+        options.PermitLimit = 5;
+    } );
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,29 +35,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseExceptionHandler("/erros");
+app.UseRateLimiter();
+app.MapHealthChecks("/health");
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.AddCheckAndAutoMigrate();
+app.AddProductEndpoints();
 
 app.Run();
 
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

@@ -32,7 +32,7 @@ namespace Catalog.Service.Features.Core
         public Result(string message, bool isSuccess, TData? data)
         {
             Message = message;
-            IsSuccess = IsSuccess;
+            IsSuccess = isSuccess;
             Data = data;
         }
         public string Message { get; }

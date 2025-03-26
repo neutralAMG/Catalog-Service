@@ -14,10 +14,10 @@ namespace Catalog.Service.Infraestructure.Context.EntitiesConfiguration
             builder.Property(p => p.Price)
                 .HasPrecision(18,2).HasDefaultValue(0).ValueGeneratedOnAdd().IsRequired();
 
-            builder.Property(p => p.DateCreated).HasDefaultValue("CURRENT_TIMESTAMP")
+            builder.Property(p => p.DateCreated).HasDefaultValueSql("GETDATE()")
                 .ValueGeneratedOnAdd().IsRequired();
 
-            builder.Property(p => p.DateUpdated).HasDefaultValue("CURRENT_TIMESTAMP")
+            builder.Property(p => p.DateUpdated).HasDefaultValueSql("GETDATE()")
                 .ValueGeneratedOnAddOrUpdate().IsRequired(false);
 
             builder.Property(p => p.Name).IsRequired().HasMaxLength(100);

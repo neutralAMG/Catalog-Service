@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Catalog.Service.Features.Features.Products.Queries.GetAll
 {
-    public class GetAllProductsQueryRequestHandler : IRequestHandler<GetAllProductsQueryRequest, Result<List<GetAllProductsQueryResponce>>>
+    public class GetAllProductsQueryRequestHandler : IRequestHandler<GetAllProductsQueryRequest, Result<GetAllProductsQueryResponce>>
     {
         private readonly IRepository<Product, int> _productRepository;
         private readonly IInputValidator<GetAllProductsQueryRequest> _validator;
@@ -21,7 +21,7 @@ namespace Catalog.Service.Features.Features.Products.Queries.GetAll
             _validator = validator;
             _logger = logger;
         }
-        public async Task<Result<List<GetAllProductsQueryResponce>>> Handle(GetAllProductsQueryRequest request, CancellationToken cancellationToken)
+        public async Task<Result<GetAllProductsQueryResponce>> Handle(GetAllProductsQueryRequest request, CancellationToken cancellationToken)
         {
             Result result = _validator.ValidateInput(request);
 
@@ -36,10 +36,10 @@ namespace Catalog.Service.Features.Features.Products.Queries.GetAll
             if(products == null)
             {
                 _logger.LogWarning("No products found");
-                Result<List<GetAllProductsQueryResponce>>.Failure("No products found");
+                return Result.Failure("No products found");
             }
 
-            return Result<List<GetAllProductsQueryResponce>>.Success("", products.Select(p => (GetAllProductsQueryResponce)p).ToList());
+            return Result<GetAllProductsQueryResponce>.Success("",  new GetAllProductsQueryResponce(products.Select(p => (ProductDTO)p).ToList()));
         }
     }
 }

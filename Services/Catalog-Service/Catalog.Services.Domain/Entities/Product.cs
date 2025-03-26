@@ -11,6 +11,6 @@ namespace Catalog.Service.Domain.Entities
         public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public DateTimeOffset DateCreated { get; set; }
-        public DateTimeOffset DateUpdated { get; set; }
+        public DateTimeOffset? DateUpdated { get; set; }
     }
 }

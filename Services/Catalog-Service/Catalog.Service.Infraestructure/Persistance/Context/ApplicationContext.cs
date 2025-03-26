@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Catalog.Service.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Catalog.Service.Infraestructure.Persistance.Context.Core
@@ -6,7 +7,7 @@ namespace Catalog.Service.Infraestructure.Persistance.Context.Core
     public class ApplicationContext : DbContext
     {
         #region Sets
-
+        DbSet<Product>  Products { get; set; }
         #endregion
 
         public ApplicationContext()
